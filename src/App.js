@@ -87,6 +87,7 @@ import React from 'react';
 import './App.css';
 import UserManagement from './components/UserManagement';
 import UploadMusic from './components/UploadMusic';
+import DonateArtist from './components/DonateArtist';
 
 function App() {
     return (
@@ -97,6 +98,7 @@ function App() {
             <main>
                 <UserManagement />
                 <UploadMusic />
+                <DonateArtist />
             </main>
         </div>
     );

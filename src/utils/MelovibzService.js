@@ -112,8 +112,22 @@ async addArtist(artistName) {
       throw new Error('Failed to add artist');
     }
   }
-
+  
+  async donateToArtist(artistName, amount) {
+    try {
+      const instance = await this.contracts.Melovibz.deployed();
+      const valueInWei = this.web3.utils.toWei(amount.toString(), 'ether');
+      await instance.donateArtist(artistName, {
+        from: this.account,
+        value: valueInWei
+      });
+    } catch (error) {
+      console.error("Error donating to artist:", error);
+      throw new Error('Failed to donate to artist');
+    }
+  }
 }
+
 
 const melovibzService = new MelovibzService();
 export default melovibzService;

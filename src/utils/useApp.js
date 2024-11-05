@@ -12,6 +12,8 @@ const useApp = () => {
     const [userStatusMessage, setUserStatusMessage] = useState('');
     const [userName, setUserName] = useState('');
     const [isRegistered, setIsRegistered] = useState(false);
+    const [donationAmount, setDonationAmount] = useState(''); // New state for donation amount
+    const [artistName, setArtistName] = useState(''); // New state for artist name
 
     // Initialize Web3 and load the contract
     useEffect(() => {
@@ -87,6 +89,30 @@ const useApp = () => {
         }
     };
 
+    const donateToArtist = async () => {
+        try {
+            if (!contract || !artistName || !donationAmount) return;
+
+            // Get the artist's address using the name
+            const artistAddress = await contract.getUserAddressByName(artistName);
+            if (artistAddress === '0x0000000000000000000000000000000000000000') {
+                setUserStatusMessage("Artist not found. Please check the name and try again.");
+                console.log("hello")
+                return;
+            }
+
+            // Proceed with the donation
+            await contract.donateArtist(artistAddress, {
+                from: account,
+                value: web3.utils.toWei(donationAmount, 'ether'),
+            });
+
+            setUserStatusMessage(`Successfully donated ${donationAmount} ETH to ${artistName}`);
+        } catch (error) {
+            console.error("Error donating to artist:", error);
+            setUserStatusMessage("Donation failed. Please try again.");
+        }
+    };
     return {
         isLoading,
         account,
@@ -94,7 +120,13 @@ const useApp = () => {
         isRegistered,
         userStatusMessage,
         connectAccount,
-        addUser
+        addUser,
+        donationAmount,          // Return donation amount
+        setDonationAmount,
+        artistName,          // Return artist name
+        setArtistName,       // Return setter for artist name
+        donateToArtist, 
+
     };
 };
 

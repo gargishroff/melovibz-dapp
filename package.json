@@ -25,9 +25,9 @@
     "web3": "^4.14.0"
   },
   "scripts": {
-    "migrate": "truffle migrate && npm run copy-contracts",
+    "migrate": "truffle migrate --reset && npm run copy-contracts",
     "copy-contracts": "copyfiles -u 2 build/contracts/Melovibz.json src/utils/contracts",
-    "start": "npm run migrate && react-app-rewired start",
+    "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired tes",
     "eject": "react-scripts eject"
