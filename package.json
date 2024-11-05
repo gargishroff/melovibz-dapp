@@ -1,23 +1,57 @@
 {
-  "name": "pet-shop",
-  "version": "1.0.0",
-  "description": "",
-  "main": "truffle.js",
-  "directories": {
-    "test": "test"
+  "name": "melovibz",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.7",
+    "crypto-browserify": "^3.12.1",
+    "https-browserify": "^1.0.0",
+    "ipfs-http-client": "^60.0.1",
+    "os-browserify": "^0.3.0",
+    "process": "^0.11.10",
+    "react": "^18.3.1",
+    "react-app-rewired": "^2.2.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "5.0.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "truffle-contract": "^4.0.31",
+    "url": "^0.11.4",
+    "vm-browserify": "^1.1.2",
+    "web-vitals": "^2.1.4",
+    "web3": "^4.14.0"
   },
   "scripts": {
-    "dev": "lite-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "migrate": "truffle migrate && npm run copy-contracts",
+    "copy-contracts": "copyfiles -u 2 build/contracts/Melovibz.json src/utils/contracts",
+    "start": "npm run migrate && react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired tes",
+    "eject": "react-scripts eject"
   },
-  "author": "",
-  "license": "ISC",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
-    "lite-server": "^2.3.0"
-  },
-  "dependencies": {
-    "@openzeppelin/contracts": "^5.1.0",
-    "ipfs-http-client": "^60.0.1",
-    "web3": "^1.10.0"
+    "copy-webpack-plugin": "^12.0.2",
+    "copyfiles": "^2.4.1"
   }
 }
