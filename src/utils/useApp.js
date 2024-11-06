@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Web3 from 'web3';
 import TruffleContract from 'truffle-contract';
 import Melovibz from './contracts/Melovibz.json';
+import { uploadToPinata } from './ipfsUtils'; // Import IPFS upload function
 
 const useApp = () => {
     const [web3, setWeb3] = useState(null);
@@ -14,6 +15,7 @@ const useApp = () => {
     const [isRegistered, setIsRegistered] = useState(false);
     const [donationAmount, setDonationAmount] = useState(''); // New state for donation amount
     const [artistName, setArtistName] = useState(''); // New state for artist name
+    const [uploadedSongs, setUploadedSongs] = useState([]); // Track user's uploaded songs
 
     // Initialize Web3 and load the contract
     useEffect(() => {
@@ -89,6 +91,24 @@ const useApp = () => {
         }
     };
 
+    // Function to upload music to IPFS and store IPFS hash on the blockchain
+    const uploadMusic = async (file) => {
+        try {
+            if (!contract) throw new Error("Contract is not loaded");
+
+            const ipfsResponse = await uploadToPinata(file);
+            const ipfsHash = ipfsResponse.IpfsHash;
+
+            await contract.publishSong(ipfsHash, { from: account });
+            setUploadedSongs((prevSongs) => [...prevSongs, ipfsHash]);
+
+            console.log("Song uploaded to IPFS and saved in the contract with IPFS hash:", ipfsHash);
+
+        } catch (error) {
+            console.error("Error uploading music:", error);
+        }
+    };
+
     const donateToArtist = async () => {
         try {
             if (!contract || !artistName || !donationAmount) return;
@@ -126,7 +146,8 @@ const useApp = () => {
         artistName,          // Return artist name
         setArtistName,       // Return setter for artist name
         donateToArtist, 
-
+        uploadMusic,
+        uploadedSongs,
     };
 };
 

@@ -3,19 +3,28 @@ pragma solidity >=0.4.22 <0.9.0;
 contract Melovibz {
 
     uint256 public number_of_users;
+    uint256 public number_of_songs;
 
     mapping(address => User) public allUsers;
     mapping(string => address) public userAddressesByName;
+    mapping(uint256 => Song) public songs;
     address[] public userAddresses;
 
     constructor() public {
         number_of_users = 0;
+        number_of_songs = 0;
     }
 
     struct User {
         string name;
         uint256 userID;
         uint256[] songsPublished;
+    }
+
+    struct Song {
+        uint256 songID;
+        string ipfsHash;
+        address owner;
     }
 
     function add_new_user(string memory _name) public {
@@ -48,7 +57,6 @@ contract Melovibz {
         return artistAddress;
     }
 
-
     event DonationMade(address indexed artist, address indexed donor, uint256 amount);
 
     function donateArtist(address artistAddress) public payable {
@@ -61,6 +69,37 @@ contract Melovibz {
         // Emit the DonationMade event with the artist's address
         emit DonationMade(artistAddress, msg.sender, msg.value);
     }
+
+    // Function to publish a new song
+    function publishSong(string memory _ipfsHash) public {
+        require(allUsers[msg.sender].userID != 0, "User not registered."); // Ensure user is registered
+
+        // Check if the song already exists by its IPFS hash for this user
+        for (uint i = 0; i < allUsers[msg.sender].songsPublished.length; i++) {
+            uint256 songId = allUsers[msg.sender].songsPublished[i];
+            if (keccak256(bytes(songs[songId].ipfsHash)) == keccak256(bytes(_ipfsHash))) {
+                revert("Song already uploaded by this user.");
+            }
+        }
+
+        // Increment song counter and create a new song
+        number_of_songs += 1;
+        songs[number_of_songs] = Song(number_of_songs, _ipfsHash, msg.sender);
+
+        // Associate the song with the user
+        allUsers[msg.sender].songsPublished.push(number_of_songs);
+    }
     
+    // Function to get a user's songs
+    function getUserSongs(address user) public view returns (uint256[] memory) {
+        return allUsers[user].songsPublished;
+    }
+
+    // Function to get song details by ID
+    function getSong(uint256 songID) public view returns (uint256, string memory, address) {
+        require(songID <= number_of_songs && songID > 0, "Song does not exist.");
+        Song memory song = songs[songID];
+        return (song.songID, song.ipfsHash, song.owner);
+    }
 
 }
