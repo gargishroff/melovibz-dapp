@@ -1,47 +1,13 @@
-// // src/components/UploadMusic.js
-// import React, { useRef } from 'react';
-// import useApp from '../utils/useApp';
-
-// function UploadMusic() {
-//     const { uploadMusic, isRegistered } = useApp();
-//     const fileInputRef = useRef(null);
-
-//     const handleFileUpload = async () => {
-//         if (fileInputRef.current.files.length === 0) {
-//             alert("Please select a file to upload.");
-//             return;
-//         }
-
-//         const file = fileInputRef.current.files[0];
-//         try {
-//             await uploadMusic(file);
-//             alert("File uploaded successfully!");
-//         } catch (error) {
-//             console.error("Error uploading file:", error);
-//             alert("Failed to upload file.");
-//         }
-//     };
-
-//     return (
-//         <div>
-//             <input type="file" ref={fileInputRef} accept="audio/*" />
-//             <br />
-//             <button onClick={handleFileUpload} className="btn btn-primary mt-2">Upload Music</button>
-//         </div>
-//     );
-// }
-
-// export default UploadMusic;
-
 // src/components/UploadMusic.js
 import React, { useState, useRef } from 'react';
 import useApp from '../utils/useApp';
 import './UploadMusic.css';
 
 function UploadMusic() {
-    const { uploadMusic } = useApp();
+    const { uploadMusic, isRegistered } = useApp();
     const fileInputRef = useRef(null);
-    const [songName, setSongName] = useState('')
+    const [songName, setSongName] = useState(''); // State to hold the song name input
+    const [songPrice, setSongPrice] = useState(''); // State to hold the song price input
 
     const handleFileUpload = async () => {
         if (fileInputRef.current.files.length === 0) {
@@ -53,10 +19,15 @@ function UploadMusic() {
             alert("Please enter a song name.");
             return;
         }
+        if (!songPrice || isNaN(songPrice) || Number(songPrice) <= 0) {
+            alert("Please enter a valid song price.");
+            return;
+        }
 
         const file = fileInputRef.current.files[0];
         try {
-            await uploadMusic(file, songName);
+            // Pass file, song name, and song price to the uploadMusic function
+            await uploadMusic(file, songName, songPrice);
             alert("File uploaded successfully!");
         } catch (error) {
             console.error("Error uploading file:", error);
@@ -68,6 +39,7 @@ function UploadMusic() {
         <div className="upload-container">
             <h2>Upload Song</h2>
             <input type="text" placeholder="Enter Song Name" value={songName} onChange={(e) => setSongName(e.target.value)} className="input-field" />
+            <input type="number" placeholder='Enter Song Price (in ETH)' value={songPrice} onChange={(e) => setSongPrice(e.target.value)} className="input-field"/>
             <input type="file" ref={fileInputRef} accept="audio/*" className="file-input" />
             <button onClick={handleFileUpload} className="btn">Upload Music</button>
         </div>

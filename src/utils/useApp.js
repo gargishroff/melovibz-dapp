@@ -17,6 +17,8 @@ const useApp = () => {
     const [artistName, setArtistName] = useState(''); // New state for artist name
     const [uploadedSongs, setUploadedSongs] = useState([]); // Track user's uploaded songs
     const [allSongs, setAllSongs] = useState([]); // To store all users' songs
+    const [userListenCounts, setUserListenCounts] = useState({}); // Tracks listens per song
+    const [songPurchaseStatus, setSongPurchaseStatus] = useState({});
 
     useEffect(() => {
         const init = async () => {
@@ -47,6 +49,12 @@ const useApp = () => {
 
         init();
     }, []);
+
+    // useEffect(() => {
+    //     if (contract) {
+    //         fetchAllSongs(contract);
+    //     }
+    // }, [contract]);
 
     const checkUserStatus = async (contractInstance, userAccount) => {
         try {
@@ -90,7 +98,7 @@ const useApp = () => {
     };
 
 // Function to upload music to IPFS and store IPFS hash on the blockchain
-const uploadMusic = async (file, songName) => {
+const uploadMusic = async (file, songName,price) => {
     try {
         if (!contract) throw new Error("Contract is not loaded");
 
@@ -99,7 +107,7 @@ const uploadMusic = async (file, songName) => {
         const ipfsHash = ipfsResponse.IpfsHash;
 
         // Publish the song with the IPFS hash and song name
-        await contract.publishSong(songName,ipfsHash, { from: account });
+        await contract.publishSong(songName,price,ipfsHash, { from: account });
 
         // Update the uploaded songs state with the new IPFS hash
         setUploadedSongs((prevSongs) => [...prevSongs, ipfsHash]);
@@ -148,6 +156,34 @@ const uploadMusic = async (file, songName) => {
         }
     };
 
+    // Function to increment the listen count for a song
+    const listenToSong = async (songID) => {
+        try {
+            if (!contract || !songID) return;
+
+            // Call the contract method to increase the listen count
+            await contract.listenToSong(songID, { from: account });
+
+            console.log("Listen count updated for song ID:", songID);
+        } catch (error) {
+            console.error("Error increasing listen count:", error);
+        }
+    };
+
+    // Function to purchase a song
+    const purchaseSong = async (songID, price) => {
+        try {
+            if (!contract || !songID || !price) return;
+
+            // Proceed with the purchase transaction
+            await contract.purchaseSong(songID, { from: account, value: web3.utils.toWei(price, 'ether') });
+
+            console.log("Song purchased with song ID:", songID);
+        } catch (error) {
+            console.error("Error purchasing song:", error);
+        }
+    };
+
     return {
         isLoading,
         account,
@@ -163,7 +199,9 @@ const uploadMusic = async (file, songName) => {
         donateToArtist, 
         uploadMusic,
         uploadedSongs,
-        allSongs
+        allSongs,
+        listenToSong,
+        purchaseSong,
     };
 };
 
