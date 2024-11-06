@@ -137,7 +137,7 @@ const uploadMusic = async (file, songName,price) => {
                 value: web3.utils.toWei(donationAmount, 'ether'),
             });
 
-            setUserStatusMessage(`Successfully donated ${donationAmount} ETH to ${artistName}`);
+            setUserStatusMessage(`Successfully paid ${donationAmount} ETH to ${artistName}`);
         } catch (error) {
             console.error("Error donating to artist:", error);
             setUserStatusMessage("Donation failed. Please try again.");
