@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import useApp from '../utils/useApp';
+import './DisplaySong.css';  // Assuming the CSS is in the same folder
 
 const DisplaySongs = () => {
     const { allSongs, isLoading, isRegistered, listenToSong, purchaseSong } = useApp();
@@ -61,9 +62,9 @@ const DisplaySongs = () => {
     if (!isRegistered) return <div>Please register to view songs.</div>;
 
     return (
-        <div>
-            <h2>All Songs Published by Users</h2>
-            <table>
+        <div className="display-songs-container">
+            <h2>Browse All User-Published Songs</h2>
+            <table className="songs-table">
                 <thead>
                     <tr>
                         <th>Song ID</th>
@@ -83,22 +84,25 @@ const DisplaySongs = () => {
                             <td>
                                 {/* If the song file is available, display it */}
                                 {songFiles[song.songID] ? (
-                                    <div>
-                                        <button onClick={() => handlePlaySong(song.songID)}>
-                                            {currentlyPlaying === song.songID ? 'Pause' : 'Play'}
-                                        </button>
-                                        <audio
-                                            ref={(ref) => (audioRefs.current[song.songID] = ref)}
-                                            controls
-                                            style={{ display: 'none' }} // Hide the default controls
-                                        >
-                                            <source
-                                                src={`${pinataGateway}${song.ipfsHash}`}
-                                                type="audio/mp3"
-                                            />
-                                            Your browser does not support the audio element.
-                                        </audio>
-                                    </div>
+                                    <div className="audio-player">
+                                    <button
+                                        className="play-button"
+                                        onClick={() => handlePlaySong(song.songID)}
+                                    >
+                                        {currentlyPlaying === song.songID ? 'Pause' : 'Play'}
+                                    </button>
+                                    <audio
+                                        ref={(ref) => (audioRefs.current[song.songID] = ref)}
+                                        controls
+                                        style={{ display: 'none' }} // Hide the default controls
+                                    >
+                                        <source
+                                            src={`${pinataGateway}${song.ipfsHash}`}
+                                            type="audio/mp3"
+                                        />
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </div>
                                 ) : (
                                     <span>Loading...</span>
                                 )}
