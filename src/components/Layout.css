@@ -1,0 +1,121 @@
+/* src/components/Layout.css */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1A1A2E; /* Midnight Blue */
+    color: #FAF3E3; /* Ivory for main text color */
+    margin: 0; /* Ensures no extra margin around the body */
+    padding: 0; /* Ensures no extra padding around the body */
+    /* margin-top: 13%; */
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 15%;
+    background-color: #1f1f1f;
+    color: #FAF3E3; /* Ivory text color */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar h2 {
+    color: #fce1f8; /* Teal Green for logo text */
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    width: 100%;
+}
+
+.sidebar nav ul li {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.sidebar nav ul li a {
+    color: #FAF3E3; /* Ivory for links */
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+    color: #FF8C8C; /* Coral on hover */
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #121212; /* Midnight Blue */
+    color: #FAF3E3; /* Ivory for main content */
+    padding: 20px;
+}
+
+.navbar-text {
+    background: linear-gradient(45deg, #ff66b2, #ff3366, #ff0033, #ff6633, #ff3366, #ff66b2);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: bold;
+    font-size: 1.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 20px;
+}
+
+.icon-music {
+    color: #ff66b2;  /* Pink color for icons */
+    margin: 0 5px;
+    font-size: 1.5rem;
+}
+
+.navbar {
+    background-color: #121212;; /* Slate Gray for a soft contrast */
+    width: 85%; /* Full-width */
+    height: 13%;
+    padding: 1rem 0; /* Remove left and right padding */
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center;
+    top: 0; /* Positions navbar at the top */
+    right: 0; /* Extends navbar to the right edge */
+    z-index: 10; /* Ensures the navbar stays above other content */
+}
+
+button, .btn, .connect-button {
+    padding: 8px 15px;
+    background-color: #FF8C8C; /* Coral for buttons */
+    color: #FAF3E3; /* Ivory text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s;
+}
+
+button:hover, .btn:hover, .connect-button:hover {
+    background-color: #E57373; /* Lighter pink on hover */
+}
+
+.sidebar-logo {
+    width: 180px; /* Adjust size as needed */
+    margin-bottom: 20px;
+}

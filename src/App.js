@@ -1,24 +1,22 @@
 // src/App.js
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Layout from './components/Layout';
 import UserManagement from './components/UserManagement';
+import DisplaySong from './components/DisplaySong';
 import UploadMusic from './components/UploadMusic';
-import DonateArtist from './components/DonateArtist';
-import DisplaySongs from './components/DisplaySong';
 
 function App() {
     return (
-        <div className="App">
-            <header>
-                <h1>Melovibz - Decentralized Music Platform</h1>
-            </header>
-            <main>
-                <UserManagement />
-                <UploadMusic />
-                <DonateArtist />
-                <DisplaySongs />
-            </main>
-        </div>
+        <Router>
+            <Layout>
+                <Routes>
+                    <Route path="/" element={<UserManagement />} />
+                    <Route path="/dashboard" element={<DisplaySong />} />
+                    <Route path="/upload" element={<UploadMusic />} />
+                </Routes>
+            </Layout>
+        </Router>
     );
 }
 

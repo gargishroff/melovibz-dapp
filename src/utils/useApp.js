@@ -48,12 +48,6 @@ const useApp = () => {
         init();
     }, []);
 
-    // useEffect(() => {
-    //     if (contract) {
-    //         fetchAllSongs(contract);
-    //     }
-    // }, [contract]);
-
     const checkUserStatus = async (contractInstance, userAccount) => {
         try {
             const registered = await contractInstance.isUserRegistered(userAccount);
