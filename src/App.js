@@ -5,6 +5,7 @@ import Layout from './components/Layout';
 import UserManagement from './components/UserManagement';
 import DisplaySong from './components/DisplaySong';
 import UploadMusic from './components/UploadMusic';
+import DonateArtist from './components/DonateArtist';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Route path="/" element={<UserManagement />} />
                     <Route path="/dashboard" element={<DisplaySong />} />
                     <Route path="/upload" element={<UploadMusic />} />
+                    <Route path="/payment" element={<DonateArtist />} />
                 </Routes>
             </Layout>
         </Router>
