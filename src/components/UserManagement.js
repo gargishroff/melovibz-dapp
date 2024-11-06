@@ -1,7 +1,7 @@
 // src/components/UserManagement.js
 import React, { useState } from 'react';
 import useApp from '../utils/useApp';
-import RegisterForm from './RegisterForm';
+import './UserManagement.css';
 
 const UserManagement = () => {
     const {
@@ -23,7 +23,7 @@ const UserManagement = () => {
     };
 
     return (
-        <div className="container" style={{ width: '650px' }}>
+        <div className="user-management-container">
             {isLoading ? (
                 <div id="loader">
                     <p className="text-center">Loading...</p>
@@ -32,37 +32,38 @@ const UserManagement = () => {
                 <div id="content">
                     {account ? (
                         isRegistered ? (
-                            <div>
-                                <p id="accountAddress" className="text-center">Welcome, {userName}</p>
+                            <div className="welcome-message">
+                                <p>Welcome, {userName}</p>
                             </div>
                         ) : (
                             <div>
-                                <h3 className="text-center">{userStatusMessage}</h3>
+                                <h3>{userStatusMessage}</h3>
                                 <form onSubmit={handleRegisterSubmit}>
-                                    <div className="form-group">
-                                        <label htmlFor="UserName">User Name</label>
-                                        <input
-                                            type="text"
-                                            id="UserName"
-                                            className="form-control"
-                                            placeholder="Enter User name"
-                                            value={newUserName}
-                                            onChange={(e) => setNewUserName(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                    <button type="submit" className="btn btn-primary">Register</button>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter User Name"
+                                        value={newUserName}
+                                        onChange={(e) => setNewUserName(e.target.value)}
+                                        className="input-field"
+                                        required
+                                    />
+                                    <button type="submit" className="btn">Register</button>
                                 </form>
                             </div>
                         )
                     ) : (
                         <div>
-                            <h3 className="text-center">Please connect your MetaMask to continue.</h3>
-                            <button onClick={connectAccount} className="btn btn-success">Login</button>
+                            <h3>Please connect your MetaMask to continue.</h3>
+                            <button onClick={connectAccount} className="btn">Login</button>
                         </div>
                     )}
                 </div>
             )}
+
+            {/* Additional text section */}
+            <div className="additional-text">
+                <p>Thank you for joining Melovibz!</p><p>After connecting your wallet and registering to the platform, you can stream songs, upload your own music and buy songs... Enjoy!!</p>
+            </div>
         </div>
     );
 };
