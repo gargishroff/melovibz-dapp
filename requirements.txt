@@ -5,3 +5,11 @@ ipfs
 pinata
 ganache
 metamask
+
+
+axios@^1.0.0
+ipfs@^0.59.0
+pinata-sdk@^2.1.0
+ganache@^7.6.0
+@metamask/detect-provider@^1.0.0
+truffle@^5.0.0
