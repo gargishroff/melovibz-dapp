@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import useApp from '../utils/useApp';
 import RegisterForm from './RegisterForm';
-import UserList from './UserList';
 
 const UserManagement = () => {
     const {
@@ -25,8 +24,6 @@ const UserManagement = () => {
 
     return (
         <div className="container" style={{ width: '650px' }}>
-            {/* <h1 className="text-center">Melovibz - User Management</h1> */}
-            {/* <hr /> */}
             {isLoading ? (
                 <div id="loader">
                     <p className="text-center">Loading...</p>
@@ -64,9 +61,6 @@ const UserManagement = () => {
                             <button onClick={connectAccount} className="btn btn-success">Login</button>
                         </div>
                     )}
-                    {/* <hr /> */}
-                    {/* Placeholder for user list component if required */}
-                    <UserList users={[]} />
                 </div>
             )}
         </div>

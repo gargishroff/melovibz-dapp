@@ -55,14 +55,14 @@ const RegisterForm = () => {
                             <input
                                 type="text"
                                 id="userName"
-                                className="form-control"
+                                className="input-field"
                                 value={userName}
                                 onChange={(e) => setUserName(e.target.value)}
                                 placeholder="Enter your username"
                                 required
                             />
                         </div>
-                        <button type="submit" className="btn btn-primary">Register</button>
+                        <button type="submit" className="btn">Register</button>
                     </form>
                     <p>{status}</p>
                 </>

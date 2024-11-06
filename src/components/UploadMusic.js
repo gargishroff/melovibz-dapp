@@ -35,6 +35,8 @@ function UploadMusic() {
         }
     };
 
+    if (!isRegistered) return <div>Please register to upload songs.</div>;
+
     return (
         <div className="upload-container">
             <h2>Upload Song</h2>

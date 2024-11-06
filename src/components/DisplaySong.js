@@ -63,7 +63,7 @@ const DisplaySongs = () => {
 
     return (
         <div className="display-songs-container">
-            <h2>Browse All User-Published Songs</h2>
+            <h2 style={{fontFamily: 'Great Vibes, cursive'}}>Browse Songs</h2>
             <table className="songs-table">
                 <thead>
                     <tr>
