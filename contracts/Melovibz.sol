@@ -127,7 +127,7 @@ contract Melovibz {
         songListenCountByUser[songID][msg.sender] += 1;
         string memory curr_user_name=get_user_name(msg.sender);
         // If the listen count exceeds the threshold and the user is not the owner, they must purchase the song
-        if (songListenCountByUser[songID][msg.sender] == listenThreshold +1 && !isCurrentUserOwner(songID,curr_user_name) && !songPurchasedByUser[songID][msg.sender])
+        if (songListenCountByUser[songID][msg.sender] > listenThreshold  && !isCurrentUserOwner(songID,curr_user_name) && !songPurchasedByUser[songID][msg.sender])
         {
             revert("You need to purchase this song after listening more than the threshold.");
         }
@@ -137,7 +137,8 @@ contract Melovibz {
         require(songs[songID].songID != 0, "Song does not exist");
         require(msg.value >= songs[songID].price, "Not enough Ether to purchase the song");
         require(!songPurchasedByUser[songID][msg.sender], "You have already purchased this song");
-
+        string memory curr_user_name=get_user_name(msg.sender);
+        require(!isCurrentUserOwner(songID,curr_user_name));
         // Mark the song as purchased by the user
         songPurchasedByUser[songID][msg.sender] = true;
 
