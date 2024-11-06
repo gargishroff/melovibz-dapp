@@ -7,9 +7,11 @@ ganache
 metamask
 
 
-axios@^1.0.0
-ipfs@^0.59.0
-pinata-sdk@^2.1.0
-ganache@^7.6.0
+axios@1.7.7
+ganache@^2.7.1
+Truffle v5.11.5 (core: 5.11.5)
+Ganache v7.9.1
+Solidity - 0.8.13 (solc-js)
+Node v20.17.0
+Web3.js v1.10.0
 @metamask/detect-provider@^1.0.0
-truffle@^5.0.0
