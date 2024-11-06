@@ -4,6 +4,7 @@ import './App.css';
 import UserManagement from './components/UserManagement';
 import UploadMusic from './components/UploadMusic';
 import DonateArtist from './components/DonateArtist';
+import DisplaySongs from './components/DisplaySong';
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <UserManagement />
                 <UploadMusic />
                 <DonateArtist />
+                <DisplaySongs />
             </main>
         </div>
     );

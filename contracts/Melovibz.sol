@@ -9,6 +9,7 @@ contract Melovibz {
     mapping(string => address) public userAddressesByName;
     mapping(uint256 => Song) public songs;
     address[] public userAddresses;
+    uint256[] public allSongIds; // Array to store all song IDs
 
     constructor() public {
         number_of_users = 0;
@@ -23,8 +24,10 @@ contract Melovibz {
 
     struct Song {
         uint256 songID;
+
         string ipfsHash;
-        address owner;
+        string owner;
+        string song_name;
     }
 
     function add_new_user(string memory _name) public {
@@ -70,11 +73,9 @@ contract Melovibz {
         emit DonationMade(artistAddress, msg.sender, msg.value);
     }
 
-    // Function to publish a new song
-    function publishSong(string memory _ipfsHash) public {
+    function publishSong(string memory song_name,string memory _ipfsHash) public {
         require(allUsers[msg.sender].userID != 0, "User not registered."); // Ensure user is registered
 
-        // Check if the song already exists by its IPFS hash for this user
         for (uint i = 0; i < allUsers[msg.sender].songsPublished.length; i++) {
             uint256 songId = allUsers[msg.sender].songsPublished[i];
             if (keccak256(bytes(songs[songId].ipfsHash)) == keccak256(bytes(_ipfsHash))) {
@@ -82,24 +83,24 @@ contract Melovibz {
             }
         }
 
-        // Increment song counter and create a new song
         number_of_songs += 1;
-        songs[number_of_songs] = Song(number_of_songs, _ipfsHash, msg.sender);
+        string memory name = get_user_name(msg.sender);
+        songs[number_of_songs] = Song(number_of_songs, _ipfsHash,name,song_name);
+        allSongIds.push(number_of_songs);
 
         // Associate the song with the user
         allUsers[msg.sender].songsPublished.push(number_of_songs);
     }
-    
-    // Function to get a user's songs
-    function getUserSongs(address user) public view returns (uint256[] memory) {
-        return allUsers[user].songsPublished;
-    }
 
-    // Function to get song details by ID
-    function getSong(uint256 songID) public view returns (uint256, string memory, address) {
-        require(songID <= number_of_songs && songID > 0, "Song does not exist.");
-        Song memory song = songs[songID];
-        return (song.songID, song.ipfsHash, song.owner);
+    function getAllSongs() public view returns (Song[] memory) {
+        Song[] memory allSongs = new Song[](allSongIds.length);
+
+        for (uint256 i = 0; i < allSongIds.length; i++) {
+            uint256 songId = allSongIds[i];
+            allSongs[i] = songs[songId]; // Retrieve the Song object using the songId
+        }
+
+        return allSongs;
     }
 
 }

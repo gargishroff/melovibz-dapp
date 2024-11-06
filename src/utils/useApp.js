@@ -16,8 +16,8 @@ const useApp = () => {
     const [donationAmount, setDonationAmount] = useState(''); // New state for donation amount
     const [artistName, setArtistName] = useState(''); // New state for artist name
     const [uploadedSongs, setUploadedSongs] = useState([]); // Track user's uploaded songs
+    const [allSongs, setAllSongs] = useState([]); // To store all users' songs
 
-    // Initialize Web3 and load the contract
     useEffect(() => {
         const init = async () => {
             try {
@@ -25,17 +25,15 @@ const useApp = () => {
                     const web3Instance = new Web3(window.ethereum);
                     setWeb3(web3Instance);
 
-                    // Request accounts
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                     setAccount(accounts[0]);
 
-                    // Load the contract
                     const contractInstance = TruffleContract(Melovibz);
                     contractInstance.setProvider(web3Instance.currentProvider);
                     const deployedContract = await contractInstance.deployed();
                     setContract(deployedContract);
+                    fetchAllSongs(deployedContract);
 
-                    // Check user registration status
                     await checkUserStatus(deployedContract, accounts[0]);
                 } else {
                     console.error("Please install MetaMask!");
@@ -49,6 +47,12 @@ const useApp = () => {
 
         init();
     }, []);
+
+    // useEffect(() => {
+    //     if (contract) {
+    //         fetchAllSongs(contract);
+    //     }
+    // }, [contract]);
 
     const checkUserStatus = async (contractInstance, userAccount) => {
         try {
@@ -91,23 +95,27 @@ const useApp = () => {
         }
     };
 
-    // Function to upload music to IPFS and store IPFS hash on the blockchain
-    const uploadMusic = async (file) => {
-        try {
-            if (!contract) throw new Error("Contract is not loaded");
+// Function to upload music to IPFS and store IPFS hash on the blockchain
+const uploadMusic = async (file, songName) => {
+    try {
+        if (!contract) throw new Error("Contract is not loaded");
 
-            const ipfsResponse = await uploadToPinata(file);
-            const ipfsHash = ipfsResponse.IpfsHash;
+        // Upload file to Pinata and get the IPFS hash
+        const ipfsResponse = await uploadToPinata(file);
+        const ipfsHash = ipfsResponse.IpfsHash;
 
-            await contract.publishSong(ipfsHash, { from: account });
-            setUploadedSongs((prevSongs) => [...prevSongs, ipfsHash]);
+        // Publish the song with the IPFS hash and song name
+        await contract.publishSong(songName,ipfsHash, { from: account });
 
-            console.log("Song uploaded to IPFS and saved in the contract with IPFS hash:", ipfsHash);
+        // Update the uploaded songs state with the new IPFS hash
+        setUploadedSongs((prevSongs) => [...prevSongs, ipfsHash]);
 
-        } catch (error) {
-            console.error("Error uploading music:", error);
-        }
-    };
+        console.log("Song uploaded to IPFS and saved in the contract with IPFS hash:", ipfsHash);
+    } catch (error) {
+        console.error("Error uploading music:", error);
+    }
+};
+
 
     const donateToArtist = async () => {
         try {
@@ -133,6 +141,19 @@ const useApp = () => {
             setUserStatusMessage("Donation failed. Please try again.");
         }
     };
+
+    const fetchAllSongs = async (contractInstance) => {
+        try {
+            // Fetch all songs from the contract
+            const allSongsData = await contractInstance.getAllSongs();
+    
+            // Set the fetched songs in the state
+            setAllSongs(allSongsData);
+        } catch (error) {
+            console.error("Error fetching all songs:", error);
+        }
+    };
+
     return {
         isLoading,
         account,
@@ -148,6 +169,7 @@ const useApp = () => {
         donateToArtist, 
         uploadMusic,
         uploadedSongs,
+        allSongs
     };
 };
 

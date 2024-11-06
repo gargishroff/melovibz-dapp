@@ -1,0 +1,7 @@
+npm install
+truffle
+npm install axios
+ipfs
+pinata
+ganache
+metamask
