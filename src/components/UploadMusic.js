@@ -41,7 +41,7 @@ function UploadMusic() {
         <div className="upload-container">
             <h2>Upload Song</h2>
             <input type="text" placeholder="Enter Song Name" value={songName} onChange={(e) => setSongName(e.target.value)} className="input-field" />
-            <input type="number" placeholder='Enter Song Price (in ETH)' value={songPrice} onChange={(e) => setSongPrice(e.target.value)} className="input-field"/>
+            <input type="number" placeholder='Enter Song Price (in Wei)' value={songPrice} onChange={(e) => setSongPrice(e.target.value)} className="input-field"/>
             <input type="file" ref={fileInputRef} accept="audio/*" className="file-input" />
             <button onClick={handleFileUpload} className="btn">Upload Music</button>
         </div>

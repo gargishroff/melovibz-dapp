@@ -9,8 +9,10 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@truffle/hdwallet-provider": "^2.1.15",
     "axios": "^1.7.7",
     "crypto-browserify": "^3.12.1",
+    "dotenv": "^16.4.5",
     "https-browserify": "^1.0.0",
     "ipfs-http-client": "^60.0.1",
     "os-browserify": "^0.3.0",
@@ -31,7 +33,7 @@
     "web3": "^4.14.0"
   },
   "scripts": {
-    "migrate": "truffle migrate --reset && npm run copy-contracts",
+    "migrate": "truffle migrate --network sepolia && npm run copy-contracts",
     "copy-contracts": "copyfiles -u 2 build/contracts/Melovibz.json src/utils/contracts",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",

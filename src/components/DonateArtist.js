@@ -40,7 +40,7 @@ const DonateArtist = () => {
                     id="donationAmount"
                     value={donationAmount}
                     onChange={(e) => setDonationAmount(e.target.value)}
-                    placeholder="Enter amount (ETH)"
+                    placeholder="Enter amount (Wei)"
                     min="0.01"
                     step="0.01"
                     className="input-field"

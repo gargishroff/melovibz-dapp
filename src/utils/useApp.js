@@ -24,6 +24,11 @@ const useApp = () => {
         const init = async () => {
             try {
                 if (window.ethereum) {
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0xaa36a7' }], // Sepolia's chain ID
+                    });
+    
                     const web3Instance = new Web3(window.ethereum);
                     setWeb3(web3Instance);
 
@@ -134,7 +139,8 @@ const uploadMusic = async (file, songName,price) => {
             // Proceed with the donation
             await contract.donateArtist(artistAddress, {
                 from: account,
-                value: web3.utils.toWei(donationAmount, 'ether'),
+                // value: web3.utils.toWei(donationAmount, 'ether'),
+                value: donationAmount,
             });
 
             setUserStatusMessage(`Successfully paid ${donationAmount} ETH to ${artistName}`);
@@ -176,7 +182,9 @@ const uploadMusic = async (file, songName,price) => {
             if (!contract || !songID || !price) return;
 
             // Proceed with the purchase transaction
-            await contract.purchaseSong(songID, { from: account, value: web3.utils.toWei(price, 'ether') });
+            // await contract.purchaseSong(songID, { from: account, value: web3.utils.toWei(price, 'ether') });
+            await contract.purchaseSong(songID, { from: account, value:price});
+
 
             console.log("Song purchased with song ID:", songID);
         } catch (error) {

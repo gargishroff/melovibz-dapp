@@ -71,7 +71,7 @@ const DisplaySongs = () => {
                         <th>Song Name</th>
                         <th>Artist Name</th>
                         <th>Song Preview</th>
-                        <th>Price (ETH)</th>
+                        <th>Price (Wei)</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -109,7 +109,7 @@ const DisplaySongs = () => {
                             </td>
                             <td>
                                 {/* Display the price if available */}
-                                {song.price ? song.price : '0'} ETH
+                                {song.price ? song.price : '0'} Wei
                             </td>
                             <td>
                                 {/* Add purchase button */}
