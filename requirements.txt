@@ -6,4 +6,4 @@ Solidity - 0.8.13 (solc-js)
 Node v20.17.0
 Web3.js v1.10.0
 Metamask
-Panata 
+Pinata 
