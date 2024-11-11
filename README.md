@@ -4,16 +4,18 @@
 
 To run the app follow the steps as mentioned below.
 
-- Clone the directory using 
-```
-git clone
-```
-- In the main directory folder, run the following commands,
-```
+- Git clone the directory.
 
-```
-```
-```
+- In the main directory folder, run the following commands,
+    - To deploy the blockchain on Sepolia Testnet
+        ```
+        npm run migrate 
+        ```
+    - To start the app
+        ```
+        npm start
+        ```
+- Once deployed the ``` \build\contracts```, contains the deployed contract files.
 
 ## Functionalities in the WebApp
 
