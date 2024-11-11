@@ -16,6 +16,9 @@ To run the app follow the steps as mentioned below.
         npm start
         ```
 - Once deployed the ``` \build\contracts```, contains the deployed contract files.
+- Requirements
+    - 
+
 
 ## Functionalities in the WebApp
 
