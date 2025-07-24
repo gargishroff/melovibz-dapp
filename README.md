@@ -1,5 +1,7 @@
 # MeloVibz: Decentralized Music Streaming Platform - Play, Pay & Publish
 
+MeloVibz is a blockchain-based music streaming web app that empowers artists and listeners through decentralization. Built on the Sepolia Testnet and integrated with IPFS for decentralized storage, the platform allows users to upload, stream, purchase, and donate for music directly on-chain. Artists can publish their work, users can buy or donate to support them, and every interaction—like listening or buying—is securely recorded on the blockchain.
+
 ## Steps of Execution 
 
 To run the app follow the steps as mentioned below.
